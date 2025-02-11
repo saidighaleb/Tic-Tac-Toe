@@ -17,6 +17,11 @@ io.on("connection", (socket) => {
 
   // Player registration and room creation/joining
   socket.on("registerPlayer", ({ playerName, roomId }) => {
+    if (!playerName) {
+      socket.emit("error", "Please enter your name!");
+      return;
+    }
+
     if (!roomId) {
       // Create new game room
       roomId = `room_${Math.random().toString(36).substr(2, 6)}`;
@@ -25,6 +30,7 @@ io.on("connection", (socket) => {
         board: Array(9).fill(""),
         currentPlayer: "X",
         scores: { X: 0, O: 0 },
+        winner: null,
       };
       socket.join(roomId);
       socket.emit("gameCreated", { roomId, role: "X" });
@@ -36,6 +42,8 @@ io.on("connection", (socket) => {
         players: games[roomId].players,
         currentPlayer: "X",
       });
+    } else {
+      socket.emit("error", "Room is full or does not exist.");
     }
   });
 
@@ -45,7 +53,7 @@ io.on("connection", (socket) => {
     if (game && game.board[index] === "" && !game.winner) {
       game.board[index] = game.currentPlayer;
       game.currentPlayer = game.currentPlayer === "X" ? "O" : "X";
-      
+
       // Check for win/draw
       const winner = checkWin(game.board);
       if (winner) {
