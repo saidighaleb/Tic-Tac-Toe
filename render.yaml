@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: tic-tac-toe-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    env: node
+    plan: free

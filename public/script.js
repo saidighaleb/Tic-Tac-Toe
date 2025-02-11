@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("https://tic-tac-toe-backend.onrender.com");
 let roomId = null;
 let playerRole = null;
 let playerName = "";
