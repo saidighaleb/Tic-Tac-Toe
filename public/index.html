@@ -8,25 +8,38 @@
 </head>
 <body>
   <div class="container">
-    <h1>Tic-Tac-Toe</h1>
-    <div id="share-link">
-        <p>Share this link with Player 2:</p>
-        <input type="text" id="game-link" readonly />
-        <button onclick="copyLink()">Copy Link</button>
-      </div>
-    <div id="board">
-      <div class="cell" data-index="0"></div>
-      <div class="cell" data-index="1"></div>
-      <div class="cell" data-index="2"></div>
-      <div class="cell" data-index="3"></div>
-      <div class="cell" data-index="4"></div>
-      <div class="cell" data-index="5"></div>
-      <div class="cell" data-index="6"></div>
-      <div class="cell" data-index="7"></div>
-      <div class="cell" data-index="8"></div>
+    <!-- Registration Phase -->
+    <div id="registration">
+      <h1>Tic-Tac-Toe</h1>
+      <input type="text" id="playerName" placeholder="Enter your name" />
+      <button onclick="createGame()">Create New Game</button>
+      <div class="or">OR</div>
+      <input type="text" id="roomId" placeholder="Enter Game ID" />
+      <button onclick="joinGame()">Join Game</button>
     </div>
-    <p id="turn">Your turn: <span id="current-player">X</span></p>
-    <button id="reset">Reset Game</button>
+
+    <!-- Game Phase (Hidden Initially) -->
+    <div id="game" style="display: none;">
+      <div id="shareLink">
+        <p>Share this link:</p>
+        <input type="text" id="gameLink" readonly />
+        <button onclick="copyLink()">Copy</button>
+      </div>
+      <div id="scoreboard">
+        <span id="playerXScore">Player X: 0</span>
+        <span id="playerOScore">Player O: 0</span>
+      </div>
+      <div id="board"></div>
+      <p id="turn">Current Turn: <span id="currentPlayer">X</span></p>
+      <button id="reset" onclick="resetGame()">Reset Game</button>
+    </div>
+
+    <!-- Winner Display -->
+    <div id="winnerModal" class="modal">
+      <div class="modal-content">
+        <p id="winnerText"></p>
+      </div>
+    </div>
   </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
